@@ -1,0 +1,50 @@
+def isint(str)
+  return !!(str =~ /^[-+]?[1-9]([0-9]*)?$/)
+end
+
+def calculator
+  numbers = [] #для чисел
+  signs = []#для знаков
+  flag = 1
+
+    loop do
+      number = gets.chomp
+      if isint(number) && flag == 1
+        numbers << number.to_i
+      elsif number == '+' ||  '-' ||  '\ ' ||  '*' || '!'
+        signs << number
+        flag = 0
+        return p 'error' if numbers.length < 2
+        break if signs.size == numbers.size - 1
+      else
+        return p 'error'
+      end
+    end
+
+    res = numbers.pop
+    for n in 0..signs.length - 1
+      if signs[n] == '+'
+        res = res+ numbers.pop
+      elsif signs[n] == '-'
+        res =numbers.pop - res
+      elsif signs[n] == '*'
+        res = res * numbers.pop
+      elsif signs[n] == '/'
+        res = numbers.pop / res
+      elsif signs[n] == '!'
+        count = 0
+        count2 = 0
+        argument = numbers.pop
+        last = argument.to_s(2).size - 1
+        while count2 != res.to_i
+          count2 += 1 if argument.to_s(2)[last - count] == '1'
+          count += 1
+        end
+        res = (argument.to_s(2)[0..(last - count)] + '0'*count).to_i(base = 2)
+      end
+    end
+    p res
+end
+
+
+calculator
