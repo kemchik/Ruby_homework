@@ -2,25 +2,25 @@ def is_int?(str)
   !!(str =~ /^[-+]?[1-9]([0-9]*)?$/)
 end
 
-def if_! (numbers , res)
-  count = 0
-  count2 = 0
+def reset_units (numbers , res)
+  amount_numbers = 0
+  number_of_units = 0
   argument = numbers.pop
   last = argument.to_s(2).size - 1
-   while count2 != res.to_i
-    count2 += 1 if argument.to_s(2)[last - count] == '1'
-    count += 1
+  while number_of_units != res.to_i
+    number_of_units += 1 if argument.to_s(2)[last - amount_numbers] == '1'
+    amount_numbers += 1
   end
-  (argument.to_s(2)[0..(last - count)] + '0' * count).to_i(base = 2)
+  (argument.to_s(2)[0..(last - amount_numbers)] + '0' * amount_numbers).to_i(base = 2)
 end
 
-def to_calc
+def run
   numbers = []
   signs = []
 
   loop do
     number = gets.chomp
-    
+
     if is_int?(number)
       numbers << number.to_i
     elsif number == '+' ||  '-' ||  '\ ' ||  '*' || '!'
@@ -30,7 +30,7 @@ def to_calc
     else
       return p 'Input Error'
     end
-    
+
   end
 
   res = numbers.pop
@@ -46,11 +46,10 @@ def to_calc
           when '/'
             numbers.pop / res
           when '!'
-            if_!(numbers, res)
+            reset_units(numbers, res)
         end
   end
-  
   p res
 end
 
-to_calca
+run
