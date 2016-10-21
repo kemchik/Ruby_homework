@@ -26,10 +26,10 @@ def to_calc
     elsif number == '+' ||  '-' ||  '\ ' ||  '*' || '!'
       signs << number
       flag = 0
-      return p 'error' if numbers.length < 2
+      return p 'Input Error' if numbers.length < 2
       break if signs.size == numbers.size - 1
     else
-      return p 'error'
+      return p 'Input Error'
     end
   end
 
